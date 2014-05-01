@@ -4,7 +4,8 @@
 [RequireComponent(typeof(Camera))]
 public class SMAA : MonoBehaviour
 {
-	public int State = 1;
+	[Range(1, 3)]
+	public int RenderState = 3;
 	public int Passes = 1;
 
 	private Texture2D black;
@@ -28,10 +29,13 @@ public class SMAA : MonoBehaviour
 		}
 	}
 
-	void Awake()
+	void OnEnable()
 	{
-		areaTexture = new AreaTexture();
-		searchTexture = new SearchTexture();
+		if (areaTexture == null)
+			areaTexture = new AreaTexture();
+
+		if (searchTexture == null)
+			searchTexture = new SearchTexture();
 	}
 
 	void Start()
@@ -67,11 +71,11 @@ public class SMAA : MonoBehaviour
 
 		Vector4 metrics = new Vector4(1 / (float)Screen.width, 1 / (float)Screen.height, Screen.width, Screen.height);
 
-		if (State == 1)
+		if (RenderState == 1)
 		{
 			Graphics.Blit(source, destination, material, 0);
 		}
-		else if (State == 2)
+		else if (RenderState == 2)
 		{
 			material.SetTexture("areaTex", areaTexture.alphaTex);
 			material.SetTexture("luminTex", areaTexture.luminTex);
@@ -85,7 +89,7 @@ public class SMAA : MonoBehaviour
 
 			rt.Release();
 		}
-		else if (State == 3)
+		else if (RenderState == 3)
 		{
 			material.SetTexture("areaTex", areaTexture.alphaTex);
 			material.SetTexture("luminTex", areaTexture.luminTex);
