@@ -1,16 +1,32 @@
 ﻿using UnityEngine;
 
+[ExecuteInEditMode]
+[RequireComponent(typeof(Camera))]
 public class SMAA : MonoBehaviour
 {
 	public int State = 1;
 	public int Passes = 1;
 
 	private Texture2D black;
-	private Shader shader;	
+	private Shader shader;
 	private Material mat;
 
 	private AreaTexture areaTexture;
 	private SearchTexture searchTexture;
+
+	Material material
+	{
+		get
+		{
+			if (mat == null)
+			{
+				mat = new Material(shader);
+				mat.hideFlags = HideFlags.HideAndDontSave;
+			}
+
+			return mat;
+		}
+	}
 
 	void Awake()
 	{
@@ -20,12 +36,29 @@ public class SMAA : MonoBehaviour
 
 	void Start()
 	{
+		// Disable if we don't support image effects
+		if (!SystemInfo.supportsImageEffects)
+		{
+			enabled = false;
+			return;
+		}
+
 		shader = Shader.Find("Custom/SMAAshader");
-		mat = new Material(shader);
+
+		// Disable the image effect if the shader can't
+		// run on the users graphics card
+		if (!shader || !shader.isSupported)
+			enabled = false;
 
 		black = new Texture2D(1,1);
 		black.SetPixel(0,0,new Color(0,0,0,0));
 		black.Apply();
+	}
+
+	void OnDisable()
+	{
+		if (mat)
+			DestroyImmediate(mat);
 	}
 
 	void OnRenderImage(RenderTexture source, RenderTexture destination)
@@ -36,29 +69,29 @@ public class SMAA : MonoBehaviour
 
 		if (State == 1)
 		{
-			Graphics.Blit(source, destination, mat, 0);
+			Graphics.Blit(source, destination, material, 0);
 		}
 		else if (State == 2)
 		{
-			mat.SetTexture("areaTex", areaTexture.alphaTex);
-			mat.SetTexture("luminTex", areaTexture.luminTex);
-			mat.SetTexture("searchTex", searchTexture.alphaTex);
-			mat.SetVector("SMAA_RT_METRICS", metrics);
+			material.SetTexture("areaTex", areaTexture.alphaTex);
+			material.SetTexture("luminTex", areaTexture.luminTex);
+			material.SetTexture("searchTex", searchTexture.alphaTex);
+			material.SetVector("SMAA_RT_METRICS", metrics);
 
 			var rt = RenderTexture.GetTemporary(Screen.width, Screen.height, 0);
 
-			Graphics.Blit(source, rt, mat, 0);
-			Graphics.Blit(rt, destination, mat, 1);
+			Graphics.Blit(source, rt, material, 0);
+			Graphics.Blit(rt, destination, material, 1);
 
 			rt.Release();
 		}
 		else if (State == 3)
 		{
-			mat.SetTexture("areaTex", areaTexture.alphaTex);
-			mat.SetTexture("luminTex", areaTexture.luminTex);
-			mat.SetTexture("searchTex", searchTexture.alphaTex);
-			mat.SetTexture("_SrcTex", source);
-			mat.SetVector("SMAA_RT_METRICS", metrics);
+			material.SetTexture("areaTex", areaTexture.alphaTex);
+			material.SetTexture("luminTex", areaTexture.luminTex);
+			material.SetTexture("searchTex", searchTexture.alphaTex);
+			material.SetTexture("_SrcTex", source);
+			material.SetVector("SMAA_RT_METRICS", metrics);
 
 			var rt = RenderTexture.GetTemporary(Screen.width, Screen.height, 0);
 			var rt2 = RenderTexture.GetTemporary(Screen.width, Screen.height, 0);
@@ -70,10 +103,10 @@ public class SMAA : MonoBehaviour
 				Graphics.Blit(black, rt);
 				Graphics.Blit(black, rt2);
 
-				Graphics.Blit(rt3, rt, mat, 0);
+				Graphics.Blit(rt3, rt, material, 0);
 
-				Graphics.Blit(rt, rt2, mat, 1);
-				Graphics.Blit(rt2, rt3, mat, 2);
+				Graphics.Blit(rt, rt2, material, 1);
+				Graphics.Blit(rt2, rt3, material, 2);
 			}
 			Graphics.Blit(rt3, destination);
 
