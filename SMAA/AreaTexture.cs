@@ -26,8 +26,6 @@ public class AreaTexture : MonoBehaviour
 			float component1 = ((float)areaTexBytes[i * 2]/(float)0xff);
 			float component2 = ((float)areaTexBytes[i * 2 + 1]/(float)0xff);
 
-			var color = new Color(0, 0, 0, component1);
-
 			alphaTex.SetPixel(x, y, new Color(0, 0, 0, component1));
 			luminTex.SetPixel(x, y, new Color(0, 0, 0, component2));
 		}

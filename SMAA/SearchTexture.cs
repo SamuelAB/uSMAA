@@ -18,8 +18,6 @@ public class SearchTexture : MonoBehaviour
 			int y = i / 64;
 			float component1 = ((float)searchTexBytes[i] / (float)0xff);
 
-			var color = new Color(0, 0, 0, component1);
-
 			alphaTex.SetPixel(x, y, new Color(0, 0, 0, component1));
 		}
 
