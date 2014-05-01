@@ -1,18 +1,18 @@
 ﻿using UnityEngine;
 
-public class AreaTexture : MonoBehaviour
+public class AreaTexture
 {
 	public Texture2D alphaTex;
 	public Texture2D luminTex;
 
-	void Awake()
+	public AreaTexture()
 	{
 		alphaTex = new Texture2D(160, 560, TextureFormat.Alpha8, false);
 		alphaTex.wrapMode = TextureWrapMode.Repeat;
 		alphaTex.alphaIsTransparency = true;
 		alphaTex.anisoLevel = 0;
 		alphaTex.filterMode = FilterMode.Point;
-	
+
 		luminTex = new Texture2D(160, 560, TextureFormat.Alpha8, false);
 		luminTex.wrapMode = TextureWrapMode.Repeat;
 		luminTex.alphaIsTransparency = true;
@@ -23,8 +23,8 @@ public class AreaTexture : MonoBehaviour
 		{
 			int x = i % 160;
 			int y = i / 160;
-			float component1 = ((float)areaTexBytes[i * 2]/(float)0xff);
-			float component2 = ((float)areaTexBytes[i * 2 + 1]/(float)0xff);
+			float component1 = ((float)areaTexBytes[i * 2] / (float)0xff);
+			float component2 = ((float)areaTexBytes[i * 2 + 1] / (float)0xff);
 
 			alphaTex.SetPixel(x, y, new Color(0, 0, 0, component1));
 			luminTex.SetPixel(x, y, new Color(0, 0, 0, component2));

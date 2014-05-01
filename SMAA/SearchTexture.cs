@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-public class SearchTexture : MonoBehaviour
+public class SearchTexture
 {
 	public Texture2D alphaTex;
 
-	void Awake()
+	public SearchTexture()
 	{
 		alphaTex = new Texture2D(64, 16, TextureFormat.Alpha8, false);
 		alphaTex.wrapMode = TextureWrapMode.Repeat;
@@ -23,7 +23,6 @@ public class SearchTexture : MonoBehaviour
 
 		alphaTex.Apply();
 	}
-
 
 	public static byte[] searchTexBytes = {
 		0xfe, 0xfe, 0x00, 0x7f, 0x7f, 0x00, 0x00, 0xfe, 0xfe, 0x00, 0x7f, 0x7f, 

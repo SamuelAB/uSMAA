@@ -9,6 +9,15 @@ public class SMAA : MonoBehaviour
 	private Shader shader;	
 	private Material mat;
 
+	private AreaTexture areaTexture;
+	private SearchTexture searchTexture;
+
+	void Awake()
+	{
+		areaTexture = new AreaTexture();
+		searchTexture = new SearchTexture();
+	}
+
 	void Start()
 	{
 		shader = Shader.Find("Custom/SMAAshader");
@@ -17,11 +26,6 @@ public class SMAA : MonoBehaviour
 		black = new Texture2D(1,1);
 		black.SetPixel(0,0,new Color(0,0,0,0));
 		black.Apply();
-
-		GameObject obj = new GameObject();
-		obj.name = "TextureGenerator";
-		obj.AddComponent<AreaTexture>();
-		obj.AddComponent<SearchTexture>();
 	}
 
 	void OnRenderImage(RenderTexture source, RenderTexture destination)
@@ -36,9 +40,9 @@ public class SMAA : MonoBehaviour
 		}
 		else if (State == 2)
 		{
-			mat.SetTexture("areaTex", GameObject.Find("TextureGenerator").GetComponent<AreaTexture>().alphaTex);
-			mat.SetTexture("luminTex", GameObject.Find("TextureGenerator").GetComponent<AreaTexture>().luminTex);
-			mat.SetTexture("searchTex", GameObject.Find("TextureGenerator").GetComponent<SearchTexture>().alphaTex);
+			mat.SetTexture("areaTex", areaTexture.alphaTex);
+			mat.SetTexture("luminTex", areaTexture.luminTex);
+			mat.SetTexture("searchTex", searchTexture.alphaTex);
 			mat.SetVector("SMAA_RT_METRICS", metrics);
 
 			var rt = RenderTexture.GetTemporary(Screen.width, Screen.height, 0);
@@ -50,9 +54,9 @@ public class SMAA : MonoBehaviour
 		}
 		else if (State == 3)
 		{
-			mat.SetTexture("areaTex", GameObject.Find("TextureGenerator").GetComponent<AreaTexture>().alphaTex);
-			mat.SetTexture("luminTex", GameObject.Find("TextureGenerator").GetComponent<AreaTexture>().luminTex);
-			mat.SetTexture("searchTex", GameObject.Find("TextureGenerator").GetComponent<SearchTexture>().alphaTex);
+			mat.SetTexture("areaTex", areaTexture.alphaTex);
+			mat.SetTexture("luminTex", areaTexture.luminTex);
+			mat.SetTexture("searchTex", searchTexture.alphaTex);
 			mat.SetTexture("_SrcTex", source);
 			mat.SetVector("SMAA_RT_METRICS", metrics);
 
