@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class SMAA : MonoBehaviour
 {
@@ -11,11 +10,6 @@ public class SMAA : MonoBehaviour
 	private Shader shader;	
 	private Material mat;
 
-	
-
-	/// <summary>
-	/// 
-	/// </summary>
 	void Start()
 	{
 		shader = Shader.Find("Custom/SMAAshader");
@@ -25,19 +19,12 @@ public class SMAA : MonoBehaviour
 		black.SetPixel(0,0,new Color(0,0,0,0));
 		black.Apply();
 
-		//create texture generator
 		GameObject obj = new GameObject();
 		obj.name = "TextureGenerator";
 		obj.AddComponent<AreaTexture>();
 		obj.AddComponent<SearchTexture>();
 	}
 
-
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <param name="source"></param>
-	/// <param name="destination"></param>
 	void OnRenderImage(RenderTexture source, RenderTexture destination)
 	{
 		Graphics.Blit(black, destination);
