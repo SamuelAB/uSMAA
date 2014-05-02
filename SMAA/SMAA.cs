@@ -67,8 +67,6 @@ public class SMAA : MonoBehaviour
 
 	void OnRenderImage(RenderTexture source, RenderTexture destination)
 	{
-		Graphics.Blit(black, destination);
-
 		Vector4 metrics = new Vector4(1 / (float)Screen.width, 1 / (float)Screen.height, Screen.width, Screen.height);
 
 		if (RenderState == 1)
@@ -89,7 +87,7 @@ public class SMAA : MonoBehaviour
 
 			rt.Release();
 		}
-		else if (RenderState == 3)
+		else
 		{
 			material.SetTexture("areaTex", areaTexture.alphaTex);
 			material.SetTexture("luminTex", areaTexture.luminTex);
