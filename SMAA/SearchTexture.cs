@@ -8,7 +8,7 @@ public class SearchTexture
 	{
 		alphaTex = new Texture2D(64, 16, TextureFormat.Alpha8, false);
 		alphaTex.wrapMode = TextureWrapMode.Repeat;
-		alphaTex.alphaIsTransparency = true;
+	//	alphaTex.alphaIsTransparency = true;
 		alphaTex.anisoLevel = 0;
 		alphaTex.filterMode = FilterMode.Point;
 		

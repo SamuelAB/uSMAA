@@ -9,13 +9,13 @@ public class AreaTexture
 	{
 		alphaTex = new Texture2D(160, 560, TextureFormat.Alpha8, false);
 		alphaTex.wrapMode = TextureWrapMode.Repeat;
-		alphaTex.alphaIsTransparency = true;
+	//	alphaTex.alphaIsTransparency = true;
 		alphaTex.anisoLevel = 0;
 		alphaTex.filterMode = FilterMode.Point;
 
 		luminTex = new Texture2D(160, 560, TextureFormat.Alpha8, false);
 		luminTex.wrapMode = TextureWrapMode.Repeat;
-		luminTex.alphaIsTransparency = true;
+	//	luminTex.alphaIsTransparency = true;
 		luminTex.anisoLevel = 0;
 		luminTex.filterMode = FilterMode.Point;
 
