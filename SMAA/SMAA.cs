@@ -7,9 +7,9 @@ public class SMAA : MonoBehaviour
 	[Range(1, 3)]
 	public int RenderState = 3;
 	public int Passes = 1;
+	public Shader Shader;
 
 	private Texture2D black;
-	private Shader shader;
 	private Material mat;
 
 	private AreaTexture areaTexture;
@@ -21,7 +21,7 @@ public class SMAA : MonoBehaviour
 		{
 			if (mat == null)
 			{
-				mat = new Material(shader);
+				mat = new Material(Shader);
 				mat.hideFlags = HideFlags.HideAndDontSave;
 			}
 
@@ -47,11 +47,9 @@ public class SMAA : MonoBehaviour
 			return;
 		}
 
-		shader = Shader.Find("Custom/SMAAshader");
-
 		// Disable the image effect if the shader can't
 		// run on the users graphics card
-		if (!shader || !shader.isSupported)
+		if (!Shader || !Shader.isSupported)
 			enabled = false;
 
 		black = new Texture2D(1,1);

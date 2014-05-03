@@ -8,4 +8,4 @@ SMAA (enhanced subpixel morphological antialiasing) for Unity.
 
 This effect requires **Unity Pro** (tested on Unity 4+) and a **SM3.0 compatible GPU**.
 
-To use it, copy the **SMAA** folder to your project and simply drop **SMAA.cs** on your camera.
+To use it, copy the **SMAA** folder to your project, drop **SMAA.cs** on your camera and **SMAAshader** into its Shader field.
