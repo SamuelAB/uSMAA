@@ -1,6 +1,8 @@
 uSMAA
 =====
 
+**This port is slow, outdated and incomplete (lots of features missing). Use at your own risks !**
+
 SMAA (enhanced subpixel morphological antialiasing) for Unity.
 
   - Base code, paper & slides : [Jorge Jimenez, Jose I. Echevarria, Tiago Sousa, Diego Gutierrez](http://www.iryoku.com/smaa/)
